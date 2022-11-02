@@ -1,0 +1,59 @@
+//To see current db
+db
+
+//To switch to a particular db
+use MyDB
+
+//Insert one record into a collection
+db.Employees.insertOne(
+   { Name: "Ankita", Gender: "Female", Dept: "Backend2", Location: "Pune"}
+)
+
+//Insert Many records into a collection
+db.Employees.insertMany([
+   { Name: "Mayur", Gender: "Male", Dept: "Backend1", Location: "Pune"},
+   { Name: "Nivedita", Gender: "Female", Dept: "Backend2", Location: "Indore"},
+   { Name: "Rewa", Gender: "Female", Dept: "Backend2", Location: "Pune"}
+])
+
+//Read documents
+db.Employees.find()
+
+//Read document with a condition
+db.Employees.find( { Location: "Pune" } )
+
+//or condition
+db.Employees.find( { $or: [ { Location: "Pune" }, { Dept: "Backend1"} ] } )
+
+//AND as well as OR Conditions
+db.Employees.find( {
+     Location: "Pune",
+     $or: [ { Dept: "Backend2" }, { Gender: /^F/ } ]
+} )
+
+//Update One document
+db.Employees.updateOne(
+   { Gender: "Male" },
+   {
+     $set: { "Dept": "Backend2"},
+     $currentDate: { lastModified: true }
+   }
+)
+
+//Update Many documents
+db.Employees.updateMany(
+   { Location: "Pune" },
+   {
+     $set: { "Dept": "Backend1" },
+     $currentDate: { lastModified: true }
+   }
+)
+
+//Delete All Documents
+db.Employees.deleteMany({})
+
+//Delete All Documents that Match a Condition
+db.Employees.deleteMany({ Location : "Pune" })
+
+//Delete Only One Document that Matches a Condition
+db.Employees.deleteOne({ Location : "Pune" })
