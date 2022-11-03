@@ -1,0 +1,17 @@
+//Creating an index for a particular field
+db.Employees.createIndex({"Name":1})
+
+//Count the total number of females in the document
+db.Employees.aggregate([{$match :{ Gender:"Female" }},{$count:"Total"}])
+
+//Displays the count of both males nd females and the result in total variable
+db.Employees.aggregate([{$group:{_id:"$Gender",total:{$sum:1}}}])
+
+//Shows the unique data in the field
+db.Employees.distinct("Gender")
+
+//To get total count of entries in a particular field
+db.Employees.count("Name")
+
+//Total added indexes
+db.Employees.getIndexes()
